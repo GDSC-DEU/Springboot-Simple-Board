@@ -18,7 +18,7 @@ public class PostController {
 
     @GetMapping("")
     List<Posts> readAllPost(){
-        return postService.postRead();
+        return postService.getAllPosts();
     }
 
 }

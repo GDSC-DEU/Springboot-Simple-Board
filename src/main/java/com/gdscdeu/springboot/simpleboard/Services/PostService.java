@@ -13,7 +13,7 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    public List<Posts> postRead(){
+    public List<Posts> getAllPosts(){
         return postRepository.findAll();
     }
 }
