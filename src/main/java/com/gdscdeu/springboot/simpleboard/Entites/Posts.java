@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-public class TestPosts {
+public class Posts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
