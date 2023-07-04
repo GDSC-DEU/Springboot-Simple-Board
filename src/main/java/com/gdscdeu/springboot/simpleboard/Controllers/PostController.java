@@ -17,8 +17,7 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    //@GetMapping("")
-    @RequestMapping(path ="",method= RequestMethod.GET)
+    @GetMapping("")
     List<TestPosts> readAllPost(){
         return postService.postRead();
     }
