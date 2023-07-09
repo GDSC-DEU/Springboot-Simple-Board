@@ -5,6 +5,7 @@ import com.gdscdeu.springboot.simpleboard.Entites.Posts;
 import com.gdscdeu.springboot.simpleboard.Repositorys.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public class PostService {
         return postRepository.findAllByTitleContainingOrContentContaining(filter.getTitle(), filter.getContent());
     }
 
+    @Transactional
+    public void deletePost(long postID) {
+        postRepository.deletePostsById(postID);
+    }
 }
