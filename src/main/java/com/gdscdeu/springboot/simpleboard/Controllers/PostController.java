@@ -1,5 +1,6 @@
 package com.gdscdeu.springboot.simpleboard.Controllers;
 
+import com.gdscdeu.springboot.simpleboard.DTOs.FindPostsDto;
 import com.gdscdeu.springboot.simpleboard.Entites.Posts;
 import com.gdscdeu.springboot.simpleboard.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class PostController {
         return post;
     }
 
+    @PostMapping("/find")
+    List<Posts> findPosts(@RequestBody FindPostsDto filter) {
+        return postService.findPosts(filter);
+    }
 }
-
-
