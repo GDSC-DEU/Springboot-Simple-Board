@@ -4,10 +4,7 @@ import com.gdscdeu.springboot.simpleboard.DTOs.CreatePostDTO;
 import com.gdscdeu.springboot.simpleboard.Entites.Posts;
 import com.gdscdeu.springboot.simpleboard.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +21,7 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     void createPost(@RequestBody @Valid CreatePostDTO createDTO){
         postService.create(createDTO);
     }
