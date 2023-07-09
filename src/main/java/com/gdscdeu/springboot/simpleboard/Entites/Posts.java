@@ -33,4 +33,11 @@ public class Posts {
     @NotNull
     long userID;
 
+    public Posts(String title, String content, long userID){
+        this.title = title;
+        this.content = content;
+        this.userID = userID;
+        this.createdAt = new Date();
+    }
+
 }
