@@ -23,12 +23,11 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     void createPost(@RequestBody @Valid CreatePostDTO createDTO){
         postService.create(createDTO);
     }
 
-}
     @GetMapping("/{postID}")
     Posts readPost(@PathVariable long postID, HttpServletResponse response) {
         Posts post = postService.getPost(postID);
