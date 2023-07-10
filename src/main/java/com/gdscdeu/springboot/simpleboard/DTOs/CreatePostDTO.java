@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class CreatePostDTO {
-    @NotEmpty
+    @NotNull
     String title;
 
-    @NotEmpty
+    @NotNull
     String content;
 
     @NotNull
-    long userID;
+    Long userID;
 }
