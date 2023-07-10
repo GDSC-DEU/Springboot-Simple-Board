@@ -1,6 +1,7 @@
 package com.gdscdeu.springboot.simpleboard.Services;
 
 import com.gdscdeu.springboot.simpleboard.DTOs.FindPostsDto;
+import com.gdscdeu.springboot.simpleboard.DTOs.UpdatePostsDto;
 import com.gdscdeu.springboot.simpleboard.Entites.Posts;
 import com.gdscdeu.springboot.simpleboard.Repositorys.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,24 @@ public class PostService {
 
     public List<Posts> findPosts(FindPostsDto filter) {
         return postRepository.findAllByTitleContainingOrContentContaining(filter.getTitle(), filter.getContent());
+    }
+
+    public Posts update(long id, UpdatePostsDto requestDto) {
+        Posts entity = postRepository.findById(id); // id에 해당하는 게시글을 검색
+
+        if (entity == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (requestDto.getTitle() != null) {
+            entity.setTitle(requestDto.getTitle());
+        }
+
+        if (requestDto.getContent() != null) {
+            entity.setContent(requestDto.getContent());
+        }
+
+        return postRepository.save(entity);
     }
 
     @Transactional
