@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PostService {
 
-    @Autowired
+    @Autowired //의존성 주입
     PostRepository postRepository;
 
     public List<Posts> getAllPosts() {
