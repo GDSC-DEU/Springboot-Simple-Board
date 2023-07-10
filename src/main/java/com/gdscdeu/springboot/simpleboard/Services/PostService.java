@@ -1,5 +1,6 @@
 package com.gdscdeu.springboot.simpleboard.Services;
 
+import com.gdscdeu.springboot.simpleboard.DTOs.CreatePostDTO;
 import com.gdscdeu.springboot.simpleboard.DTOs.FindPostsDto;
 import com.gdscdeu.springboot.simpleboard.Entites.Posts;
 import com.gdscdeu.springboot.simpleboard.Repositorys.PostRepository;
@@ -17,6 +18,12 @@ public class PostService {
 
     public List<Posts> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public Posts create(CreatePostDTO createDTO) {
+        Posts addPost = new Posts(createDTO.getTitle(),  createDTO.getContent(), createDTO.getUserID());
+        postRepository.save(addPost);
+        return addPost;
     }
 
     public Posts getPost(long postID) {
