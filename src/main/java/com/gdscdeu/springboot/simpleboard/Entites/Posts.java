@@ -1,14 +1,10 @@
 package com.gdscdeu.springboot.simpleboard.Entites;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -32,12 +28,13 @@ public class Posts {
     Date createdAt;
 
     @NotNull
-    long userID;
+    @ManyToOne
+    Users user; // FK
 
-    public Posts(String title, String content, long userID){
+    public Posts(String title, String content, Users user){
         this.title = title;
         this.content = content;
-        this.userID = userID;
+        this.user = user;
         this.createdAt = new Date();
     }
 
