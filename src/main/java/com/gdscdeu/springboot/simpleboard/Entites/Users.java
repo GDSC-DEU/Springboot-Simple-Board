@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,9 +22,14 @@ public class Users {
     String username;
 
     @NotNull
-    String encryptedPassword; //SHA256
+    String encryptedPassword; // SHA512
 
     @OneToMany
-    List<Posts> posts;
+    List<Posts> posts = new ArrayList<Posts>();
+
+    public Users(String username, String encryptedPassword) {
+        this.username = username;
+        this.encryptedPassword = encryptedPassword;
+    }
 
 }
