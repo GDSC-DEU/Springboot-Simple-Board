@@ -8,6 +8,8 @@ import com.gdscdeu.springboot.simpleboard.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
@@ -26,7 +28,21 @@ public class PostController {
     }
 
     @PostMapping("")
-    void createPost(@RequestBody @Valid CreatePostDTO createDTO){
+    void createPost(
+            @RequestBody @Valid CreatePostDTO createDTO,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        long userId = (long)session.getAttribute("USER_ID");
+        createDTO.setUserID(userId);
+
         postService.create(createDTO);
     }
 
@@ -49,7 +65,25 @@ public class PostController {
 
 
     @PatchMapping("/{id}")
-    public Posts update(@PathVariable long id, @RequestBody UpdatePostsDto requestDto, HttpServletResponse response) {
+    public Posts update(
+            @PathVariable long id,
+            @RequestBody UpdatePostsDto requestDto,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
+        long userId = (long)session.getAttribute("USER_ID");
+        if (userId != id) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
         try {
             return postService.update(id, requestDto); //수정 Posts 값 반환
         } catch (IllegalArgumentException exception) {
@@ -60,10 +94,18 @@ public class PostController {
 
 
     @DeleteMapping("/{postID}")
-    void deletePost(@PathVariable long postID, HttpServletResponse response) {
+    void deletePost(
+            @PathVariable long postID,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        HttpSession session = request.getSession(false);
         Posts post = postService.getPost(postID);
 
-        if (post == null) {
+        if (session == null || postID != (long)session.getAttribute("USER_ID")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        } else if (post == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }

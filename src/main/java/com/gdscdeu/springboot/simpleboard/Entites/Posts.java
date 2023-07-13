@@ -1,6 +1,5 @@
 package com.gdscdeu.springboot.simpleboard.Entites;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,11 +29,12 @@ public class Posts {
 
     @NotNull
     @ManyToOne
-    Users userID; // FK
+    Users user; // FK
 
-    public Posts(String title, String content, long userID){
+    public Posts(String title, String content, Users user){
         this.title = title;
         this.content = content;
+        this.user = user;
         this.createdAt = new Date();
     }
 

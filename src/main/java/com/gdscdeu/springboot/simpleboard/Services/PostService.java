@@ -4,7 +4,9 @@ import com.gdscdeu.springboot.simpleboard.DTOs.CreatePostDTO;
 import com.gdscdeu.springboot.simpleboard.DTOs.FindPostsDto;
 import com.gdscdeu.springboot.simpleboard.DTOs.UpdatePostsDto;
 import com.gdscdeu.springboot.simpleboard.Entites.Posts;
+import com.gdscdeu.springboot.simpleboard.Entites.Users;
 import com.gdscdeu.springboot.simpleboard.Repositorys.PostRepository;
+import com.gdscdeu.springboot.simpleboard.Repositorys.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,9 @@ import java.util.List;
 @Service
 public class PostService {
 
+    @Autowired
+    UserRepository userRepository;
+
     @Autowired //의존성 주입
     PostRepository postRepository;
 
@@ -22,7 +27,14 @@ public class PostService {
     }
 
     public Posts create(CreatePostDTO createDTO) {
-        Posts addPost = new Posts(createDTO.getTitle(),  createDTO.getContent(), createDTO.getUserID());
+        long userId = createDTO.getUserID();
+        Users user = userRepository.findById(userId);
+
+        if (user == null) {
+            throw new RuntimeException("user is not found");
+        }
+
+        Posts addPost = new Posts(createDTO.getTitle(),  createDTO.getContent(), user);
         postRepository.save(addPost);
         return addPost;
     }
