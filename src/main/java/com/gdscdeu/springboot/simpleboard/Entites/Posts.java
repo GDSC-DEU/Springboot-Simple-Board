@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -32,12 +29,12 @@ public class Posts {
     Date createdAt;
 
     @NotNull
-    long userID;
+    @ManyToOne
+    Users userID; // FK
 
     public Posts(String title, String content, long userID){
         this.title = title;
         this.content = content;
-        this.userID = userID;
         this.createdAt = new Date();
     }
 
