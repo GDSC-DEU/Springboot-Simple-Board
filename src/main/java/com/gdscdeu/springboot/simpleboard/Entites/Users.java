@@ -24,9 +24,6 @@ public class Users {
     @NotNull
     String encryptedPassword; // SHA512
 
-    @OneToMany
-    List<Posts> posts = new ArrayList<Posts>();
-
     public Users(String username, String encryptedPassword) {
         this.username = username;
         this.encryptedPassword = encryptedPassword;
